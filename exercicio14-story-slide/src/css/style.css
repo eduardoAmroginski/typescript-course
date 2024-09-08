@@ -1,0 +1,119 @@
+body{
+    font: sans-serif;
+    margin: 20px;
+
+    &.paused{
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        text-size-adjust: none;
+        -webkit-text-size-adjust: none;
+        touch-action: manipulation;
+    }
+}
+
+img, video{
+    display: block;
+    max-width: 100%;
+}
+
+h1{
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+#slide{
+    display: grid;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 20px auto;
+    max-width: 800px;
+    background: black;
+}
+
+#slide-elements{
+    display: grid;
+    grid-area: 1/1;
+
+    & > * {
+        grid-area: 1/1;
+        opacity: 0;
+        visibility: none;
+    }
+
+    & > .active {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+
+#slide-controls{
+    grid-area: 1/1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+
+    & button {
+        opacity: 0;
+        appearance: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+        &#mute-button{
+            opacity: 0;
+            appearance: none;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            max-width: fit-content;
+            max-height: 30px;
+            overflow: hidden;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            &.active{
+                opacity: 1;
+                appearance: initial;
+            }
+        }
+    }
+}
+
+#slide-thumb{
+    display: flex;
+    position: absolute;
+    width: 100%;
+    pointer-events: none;
+
+    & > span{
+        flex: 1;
+        display: block;
+        height: 4px;
+        background: rgba(255,255,255,0.2);
+        margin: 5px;
+        border-radius: 4px;
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    & .thumb-item.active{
+        display: block;
+        height: inherit;
+        background: rgba(255,255,255,0.9);
+        border-radius: inherit;
+        transform: translateX(-100%);
+        animation: thumb forwards linear running;
+    }
+
+    & .thumb-item.paused{
+        animation-play-state: paused;
+    }
+    
+}
+
+
+
+
+@keyframes thumb {
+    to {
+        transform: initial;
+    }
+}
