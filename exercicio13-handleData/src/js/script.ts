@@ -15,16 +15,34 @@ async function handleData() {
   fillStatistics(transactions);
 }
 
+function fillList(list: CountList, containerId: string) {
+  const containerElement = document.getElementById(containerId);
+
+  if (containerElement) {
+    Object.keys(list).forEach((key) => {
+      containerElement.innerHTML += `<p>${key}: ${list[key]}</p>`;
+    });
+  }
+}
+
 function fillStatistics(transactions: Transacao[]) {
-  const spanTotal = document.querySelector("#total span");
-
-  if (!spanTotal) return;
-
   const data = new Statistics(transactions);
-  spanTotal.innerHTML = data.total.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
+
+  fillList(data.payment, "payment");
+  fillList(data.status, "status");
+
+  const spanTotal = document.querySelector<HTMLElement>("#total span");
+  if (spanTotal) {
+    spanTotal.innerHTML = data.total.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  }
+
+  const bestDayElement = document.querySelector("#best-day span");
+  if (bestDayElement) {
+    bestDayElement.innerHTML = data.bestDay[0];
+  }
 }
 
 function fillTable(transactions: Transacao[]): void {

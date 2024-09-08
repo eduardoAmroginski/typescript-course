@@ -23,3 +23,7 @@ interface Transacao {
     data: Date;
     novo: boolean;
   }
+
+interface CountList{
+  [key: string] : number
+}
